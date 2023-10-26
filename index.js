@@ -13,6 +13,12 @@ import {Router} from 'itty-router';
 async function fetchHandler(req, env, ctx) {
   // eslint-disable-next-line
   const router = Router();
+  const josnResponse = (obj, status) => {
+    return new Response(JSON.stringify(obj, null, "  "), {
+        headers: {'content-type': 'application/json'},
+        status: status || 200,
+      });
+  }
   router.get('/repositories', async (req) => {
     const {language, since, spokenLanguage} = req.query;
     const repositories = await fetchRepositories({
@@ -20,9 +26,7 @@ async function fetchHandler(req, env, ctx) {
       since,
       spokenLanguage,
     });
-    return new Response(JSON.stringify(repositories), {
-      headers: {'content-type': 'application/json'},
-    });
+    return josnResponse(repositories);
   });
 
   router.get('/developers', async (req) => {
@@ -31,21 +35,19 @@ async function fetchHandler(req, env, ctx) {
       language,
       since,
     });
-    return new Response(JSON.stringify(developers, null, "  "), {
-      headers: {'content-type': 'application/json'},
-    });
+    return josnResponse(developers);
   });
 
   router.all('*', (req) => {
-    return new Response(JSON.stringify({
+    return josnResponse({
       message: 'Not found',
-    }, null, "  "), {status: 404});
+    }, 404);
   });
 
   return router.handle(req).catch((err) => {
-    return new Response(JSON.stringify({
+    return josnResponse({
       message: err.message,
-    }, null, "  "), {status: 500});
+    }, 500);
   });
 }
 
