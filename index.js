@@ -10,7 +10,7 @@ import {Router} from 'itty-router';
  * @param {Object} ctx - The context object.
  * @return {Promise<Response>} - The response object.
  */
-async function fetchHandler(req, env, ctx) {
+async function fetchHandler(request, env, ctx) {
   // eslint-disable-next-line
   const router = Router();
   const josnResponse = (obj, status) => {
@@ -19,6 +19,14 @@ async function fetchHandler(req, env, ctx) {
         status: status || 200,
       });
   }
+
+  router.get('/', () => {
+    return josnResponse({
+      repositories: `${request.url}repositories`,
+      developers: `${request.url}developers`,
+    }, 200);
+  })
+
   router.get('/repositories', async (req) => {
     const {language, since, spokenLanguage} = req.query;
     const repositories = await fetchRepositories({
@@ -44,7 +52,7 @@ async function fetchHandler(req, env, ctx) {
     }, 404);
   });
 
-  return router.handle(req).catch((err) => {
+  return router.handle(request).catch((err) => {
     return josnResponse({
       message: err.message,
     }, 500);
