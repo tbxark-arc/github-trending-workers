@@ -1,6 +1,6 @@
 # github-trending-workers
  
-Github treding json api
+The JSON format API of Github Trending deployed on Cloudflare Workers.
 
 ```json
 {
