@@ -8,3 +8,9 @@ The JSON format API of Github Trending deployed on Cloudflare Workers.
   "developers": "https://github-trending.tbxark.workers.dev/developers"
 }
 ```
+
+
+### Thanks
+
+https://github.com/huchenme/github-trending-api
+
