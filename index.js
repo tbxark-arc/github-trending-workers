@@ -15,7 +15,13 @@ async function fetchHandler(request, env, ctx) {
   const router = Router();
   const josnResponse = (obj, status) => {
     return new Response(JSON.stringify(obj, null, "  "), {
-        headers: {'content-type': 'application/json'},
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Access-Control-Expose-Headers': '*',
+          'Content-Type': 'application/json; charset=utf-8',
+        },
         status: status || 200,
       });
   }
