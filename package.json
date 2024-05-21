@@ -17,6 +17,6 @@
   "devDependencies": {
     "eslint": ">=5.16.0",
     "eslint-config-google": "^0.14.0",
-    "wrangler": "^3.0.0"
+    "wrangler": "^3.19.0"
   }
 }
